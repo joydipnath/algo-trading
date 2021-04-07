@@ -1,0 +1,84 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Page User {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title">Edit Profile</h4>
+<!--          <p class="card-category">Complete your profile</p>-->
+        </div>
+        <div class="card-body">
+          <form role="form" method="post" action="{{url_for('home_blueprint.profile')}}" accept-charset="UTF-8" enctype="multipart/form-data">
+            {{ form.csrf_token() }}
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{ form.username.label }}</label>
+                  {{ form.username(class="form-control", value=current_user.username) }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{ form.email.label }}</label>
+                  {{ form.email(class="input form-control", type="email", value=current_user.email ) }}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{ form.first_name.label }}</label>
+                  {{ form.first_name(class="input form-control", type="text", value=current_user.first_name ) }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating">{{ form.last_name.label }}</label>
+                  {{ form.last_name(class="input form-control", type="text", value=current_user.last_name ) }}
+                </div>
+              </div>
+            </div>
+
+
+
+            {{ form.submit(class="btn btn-primary pull-right", type="submit") }}
+<!--            <button type="submit" class="btn btn-primary pull-right">Update Profile</button>-->
+            <div class="clearfix"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-profile">
+        <div class="card-avatar">
+          <a href="#">
+            <img class="img" src="/static/assets/img/faces/default.png" />
+          </a>
+        </div>
+        <div class="card-body">
+          <h6 class="card-category text-gray">
+            {{ current_user.username }}
+          </h6>
+          <h4 class="card-title">
+            {{ current_user.email }}
+          </h4>
+          <p class="card-description">
+            {{ current_user.about_me }}
+          </p>
+          <a href="#" class="btn btn-primary btn-round">Follow</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
