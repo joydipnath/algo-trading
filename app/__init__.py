@@ -57,11 +57,25 @@ def request_func(app):
     We have access to the request context.
     """
 
+    # @app.before_first_request
+    # def before_first_request():
+    #     if not current_user.is_authenticated and request.path != '/login' and request.path != '/register':
+    #         logout_user()
+    #         flash("We have logged you out, just to be safe.")
+    #         return redirect('/login')
+
+
     @app.before_request
     def before_request():
-        if not current_user.is_authenticated and request.path != '/login':
-            logout_user()
+
+        ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'css', 'js', 'ttf', 'map'])
+        filename = request.path
+        if '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS:
+            pass
+
+        elif not current_user.is_authenticated and request.path != '/login' and request.path != '/register':
             # return request.endpoint
+            logout_user()
             flash("We have logged you out, just to be safe.")
             return redirect('/login')
 
