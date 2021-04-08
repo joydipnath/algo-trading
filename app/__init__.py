@@ -3,7 +3,8 @@ from flask_login import LoginManager, current_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
 import logging
-from logging import basicConfig, DEBUG, getLogger, StreamHandler
+from logging import basicConfig, DEBUG, getLogger, StreamHandler, Formatter
+from logging.handlers import RotatingFileHandler
 from os import path
 from flask.json import JSONEncoder
 from datetime import datetime
@@ -36,16 +37,29 @@ def configure_database(app):
 
 
 def register_logging(app):
-    log = logging.getLogger('werkzeug')
-    log.setLevel(logging.DEBUG)
+    # log = logging.getLogger('werkzeug')
+    # log.setLevel(logging.DEBUG)
     # log.addHandler(handler)
     # current date and time
     now = datetime.now()
     # date and time format: dd/mm/YYYY H:M:S
     format = "%d-%m-%Y"
     filename = 'logs/'+now.strftime(format)+'-flask.log'
-    basicConfig(filename=filename, level=DEBUG, format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
+    # basicConfig(filename=filename, level=DEBUG, format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
+    logHandler = RotatingFileHandler(filename=filename, maxBytes=10000, backupCount=1)
 
+    logHandler.setFormatter(Formatter(
+        '%(asctime)s %(levelname)s: %(message)s '
+        '[in %(pathname)s:%(lineno)d]'
+    ))
+    # set the log handler level
+    logHandler.setLevel(logging.INFO)
+
+    # set the app logger level
+    # to control log level even debug mode is false.
+    app.logger.setLevel(logging.DEBUG)
+
+    app.logger.addHandler(logHandler)
 
 
 def request_func(app):

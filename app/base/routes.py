@@ -1,4 +1,4 @@
-from flask import jsonify, render_template, redirect, request, url_for, session, flash
+from flask import jsonify, render_template, redirect, request, url_for, session, flash, current_app
 from flask_login import (
     current_user,
     login_required,
@@ -13,12 +13,13 @@ from app.base.models import User
 from app.base.util import verify_pass
 import json
 
+
 @blueprint.route('/')
 def route_default():
     return redirect(url_for('base_blueprint.login') + '?next=' + request.path)
 
-## Login & Registration
 
+## Login & Registration
 @blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     login_form = LoginForm(request.form)
@@ -36,6 +37,7 @@ def login():
         if user and verify_pass( password, user.password):
             session.permanent = True
             login_user(user, remember=remember)
+            current_app.logger.info('User login:' + current_user.username)
             flash("You have logged you in.")
             return redirect(url_for('base_blueprint.route_default'))
 

@@ -1,5 +1,5 @@
 from app.home import blueprint
-from flask import render_template, redirect, url_for, request, flash
+from flask import render_template, redirect, url_for, request, flash, current_app
 from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
@@ -7,6 +7,7 @@ import logging
 from app.home.forms import UpdateProfileForm
 from app.base.models import User
 from app import db
+import app
 # login_manager.blueprint_login_views = url_for('base_blueprint.login')
 
 
