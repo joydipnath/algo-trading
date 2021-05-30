@@ -1,7 +1,7 @@
 '''Application error handlers.'''
 
 from app.errors import blueprint
-from flask import render_template, redirect, url_for, request, jsonify
+from flask import render_template, redirect, url_for, request, jsonify, current_app
 from flask_login import login_required, current_user
 from app import login_manager
 from jinja2 import TemplateNotFound
@@ -40,7 +40,7 @@ def handle_unexpected_error(error):
             'error': str(error)
         }
     }
-
+    # current_app.logger.info('User login:' + current_user.username)
     return jsonify(response), status_code
 
 

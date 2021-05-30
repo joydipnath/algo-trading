@@ -8,7 +8,7 @@ from logging.handlers import RotatingFileHandler
 from os import path
 from flask.json import JSONEncoder
 from datetime import datetime
-
+from logging.config import fileConfig
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -37,6 +37,8 @@ def configure_database(app):
 
 
 def register_logging(app):
+    # fileConfig('logging.cfg')
+
     # log = logging.getLogger('werkzeug')
     # log.setLevel(logging.DEBUG)
     # log.addHandler(handler)
