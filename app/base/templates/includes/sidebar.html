@@ -16,10 +16,16 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item {% if 'page-user' in segment %} active {% endif %}">
+          <li class="nav-item {% if 'profile' in segment %} active {% endif %}">
             <a class="nav-link" href="/profile">
               <i class="material-icons">person</i>
               <p>User Profile</p>
+            </a>
+          </li>
+          <li class="nav-item {% if 'crypto' in segment %} active {% endif %}">
+            <a class="nav-link" href="{{url_for('crypto_blueprint.index')}}">
+              <i class="material-icons">monetization_on</i>
+              <p>Crypto</p>
             </a>
           </li>
 <!--          <li class="nav-item {% if 'ui-tables' in segment %} active {% endif %}">-->

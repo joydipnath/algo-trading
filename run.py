@@ -27,9 +27,9 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 if DEBUG:
-    app.logger.info('DEBUG       = ' + str(DEBUG)      )
-    app.logger.info('Environment = ' + get_config_mode )
-    app.logger.info('DBMS        = ' + app_config.SQLALCHEMY_DATABASE_URI )
+    app.logger.info('DEBUG       = ' + str(DEBUG))
+    app.logger.info('Environment = ' + get_config_mode)
+    app.logger.info('DBMS        = ' + app_config.SQLALCHEMY_DATABASE_URI)
 
 if __name__ == "__main__":
     app.run()

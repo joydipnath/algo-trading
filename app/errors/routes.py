@@ -31,18 +31,21 @@ import logging
 def handle_unexpected_error(error):
     status_code = 500
     success = False
-    response = {
-        'success': success,
-        'error': {
-            # 'type': 'UnexpectedException',
-            'type': error.__class__.__name__,
-            'message': 'An unexpected error has occurred.',
-            'error': str(error)
+
+    if request.accept_mimetypes.accept_json:
+        response = {
+            'success': success,
+            'error': {
+                # 'type': 'UnexpectedException',
+                'type': error.__class__.__name__,
+                'message': 'An unexpected error has occurred.',
+                'error': str(error)
+            }
         }
-    }
 
-    return jsonify(response), status_code
+        return jsonify(response), status_code
 
+    return render_template('page-404.html'), 404
 
 @blueprint.app_errorhandler(404)
 def not_found_error(error):
